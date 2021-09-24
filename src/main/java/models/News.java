@@ -61,17 +61,18 @@ public class News {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Review)) return false;
-        Review review = (Review) o;
-        return rating == review.rating &&
-                id == review.id &&
-                restaurantId == review.restaurantId &&
-                Objects.equals(content, review.content) &&
-                Objects.equals(writtenBy, review.writtenBy);
+        if (!(o instanceof News)) return false;
+        News news = (News) o;
+        return id == news.id &&
+                departmentsId == news.departmentsId &&
+                usersId == news.usersId &&
+                Objects.equals(topic, news.topic) &&
+                Objects.equals(content, news.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(content, writtenBy, rating, id, restaurantId);
+        return Objects.hash(content, topic, departmentsId , id, usersId);
     }
+
 }

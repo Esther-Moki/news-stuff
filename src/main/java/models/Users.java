@@ -7,13 +7,13 @@ public class Users {
     private String position;
     private String role;
     private int id;
-  //  private int departmentsId; //will be used to connect Departments to Users (one-to-many)
+    private int departmentsId; //will be used to connect Departments to Users (one-to-many)
 
     public Users(String username,String position,String role,int departmentsId){
         this.username = username;
         this.position = position;
         this.role = role;
-       // this.departmentsId = departmentsId;
+        this.departmentsId = departmentsId;
     }
 
     public String getUsername() {
@@ -32,13 +32,13 @@ public class Users {
         return id;
     }
 
-//    public int getDepartmentsId() {
-//        return departmentsId;
-//    }
-//
-//    public void setDepartmentsId(int departmentsId) {
-//        this.departmentsId = departmentsId;
-//    }
+    public int getDepartmentsId() {
+        return departmentsId;
+    }
+
+    public void setDepartmentsId(int departmentsId) {
+        this.departmentsId = departmentsId;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -62,7 +62,7 @@ public class Users {
         if (!(o instanceof Users )) return false;
         Users users = (Users) o;
         return  id == users.id &&
-               // departmentsId == users.departmentsId &&
+                departmentsId == users.departmentsId &&
                 Objects.equals(username, users.username) &&
                 Objects.equals(position, users.position) &&
                 Objects.equals(role, users.role);
@@ -70,6 +70,7 @@ public class Users {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, position, role, id);
+        return Objects.hash(username, position, role, id,departmentsId);
     }
+
 }
