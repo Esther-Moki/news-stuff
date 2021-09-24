@@ -8,7 +8,7 @@ public class Departments {
     private String employees;
     private int id;
 
-    public Departments(String name,String description,String employees){
+    public Departments(String name, String description, String employees) {
         this.name = name;
         this.description = description;
         this.employees = employees;
@@ -18,12 +18,15 @@ public class Departments {
     public String getName() {
         return name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public String getEmployees() {
         return employees;
     }
+
     public int getId() {
         return id;
     }
@@ -31,6 +34,7 @@ public class Departments {
     public void setName(String name) {
         this.name = name;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -38,6 +42,7 @@ public class Departments {
     public void setEmployees(String employees) {
         this.employees = employees;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -49,14 +54,15 @@ public class Departments {
         Departments departments = (Departments) o;
         return id == departments.id &&
                 Objects.equals(name, departments.name) &&
-                Objects.equals(description, departments .description) &&
-                Objects.equals(employees, departments.employees) ;
+                Objects.equals(description, departments.description) &&
+                Objects.equals(employees, departments.employees);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name,description, employees, id);
+        return Objects.hash(name, description, employees, id);
     }
+}
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
@@ -69,4 +75,4 @@ public class Departments {
 //    public int hashCode() {
 //        return Objects.hash(name, id);
 //    }
-}
+
