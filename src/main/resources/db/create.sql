@@ -23,6 +23,16 @@ CREATE TABLE IF NOT EXISTS users (
   role VARCHAR,
   departmentsid INTEGER
 );
+CREATE TABLE IF NOT EXISTS departments_users (
+  id SERIAL PRIMARY KEY,,
+ usersid INTEGER,
+ departmetsid INTEGER
+);
+CREATE TABLE IF NOT EXISTS departments_news (
+  id SERIAL PRIMARY KEY,,
+ newsid INTEGER,
+ departmetsid INTEGER
+);
 
 CREATE DATABASE newsinformation_test WITH TEMPLATE newsinformation;
 

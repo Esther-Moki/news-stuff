@@ -2,10 +2,12 @@ package dao;
 
 import models.Departments;
 import models.News;
+import models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oDepartmentsDao implements DepartmentsDao{
@@ -20,8 +22,8 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     @Override
     public void add(Departments departments) {
         String sql = "ADD INTO  departments (name,description, employees) VALUES (:name,:description,:employees,:phone)";
-        try (Connection conn=sql2o.open();){
-            int id=(int)conn.createQuery(sql,true)
+        try (Connection con=sql2o.open();){
+            int id=(int)con.createQuery(sql,true)
                     .bind( departments)
                     .executeUpdate()
                     .getKey();
@@ -34,8 +36,8 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     //many-to-many
     @Override
     public List<Departments> getAll() {
-        Connection conn=sql2o.open();
-        return conn.createQuery("SELECT * FROM departments")
+        Connection con=sql2o.open();
+        return con.createQuery("SELECT * FROM departments")
                 .executeAndFetch(Departments.class);
     }
 
@@ -51,16 +53,56 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
         }
     }
 
-    //many to many
+
+    //many to many between news and departments
     @Override
-    public List<News> getAllNewsForADepartments(int departmentId) {
-        return null;
+    public List<News> getAllNewsForADepartments(int departmentsId) {
+
+        ArrayList<News> news = new ArrayList<>();
+
+        String joinQuery = "SELECT newsid FROM departments_news WHERE departmentsid = :departmentsId";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allNewsIds = con.createQuery(joinQuery)
+                    .addParameter("departmentsid", departmentsId)
+                    .executeAndFetch(Integer.class);
+            for (Integer newsId : allNewsIds){
+                String usersQuery = "SELECT * FROM news WHERE id = :newsId";
+                news.add(
+                        con.createQuery(usersQuery)
+                                .addParameter("newsId", newsId)
+                                .executeAndFetchFirst(News.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+
+        return news;
     }
 
-    //many to many
+    //many to many between users and departments
     @Override
-    public List<News> getAllUsersForADepartments(int departmentId) {
-        return null;
+    public List<Users> getAllUsersForADepartments(int departmentsId) {
+        ArrayList<Users> users = new ArrayList<>();
+
+        String joinQuery = "SELECT usersid FROM departments_users WHERE departmentsid = :departmentsId";
+
+        try (Connection con = sql2o.open()) {
+            List<Integer> allUsersIds = con.createQuery(joinQuery)
+                    .addParameter("departmentsid", departmentsId)
+                    .executeAndFetch(Integer.class);
+            for (Integer usersId : allUsersIds){
+                String usersQuery = "SELECT * FROM users WHERE id = :usersId";
+                users.add(
+                        con.createQuery(usersQuery)
+                                .addParameter("usersId", usersId)
+                                .executeAndFetchFirst(Users.class));
+            }
+        } catch (Sql2oException ex){
+            System.out.println(ex);
+        }
+
+        return users;
     }
 
     //updating a department
@@ -69,14 +111,18 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
 
     }
 
-    //deleting a department by Id;
+    //deleting a department by Id from both the single and join tables;
     @Override
     public void deleteById(int id) {
         String sql = "DELETE FROM departments WHERE id=:id";
-        try(Connection conn=sql2o.open();)
-        {conn.createQuery(sql,true)
+        String deleteJoin = "DELETE from departmets_users WHERE departmentsid = :departmentsId";
+        try(Connection con=sql2o.open()) {
+            con.createQuery(sql,true)
                 .addParameter("id",id)
                 .executeUpdate();
+            con.createQuery(deleteJoin)
+                    .addParameter("departmentsId", id)
+                    .executeUpdate();
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -86,11 +132,24 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     @Override
     public void clearAll() {
         String sql="DELETE * FROM departments";
-        try(Connection conn=sql2o.open();){
-            conn.createQuery(sql,true)
+        try(Connection con=sql2o.open();){
+            con.createQuery(sql,true)
                     .executeUpdate();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
 }
+
+
+
+//    public void addFoodtypeToRestaurant(Foodtype foodtype, Restaurant restaurant){
+//        String sql = "INSERT INTO users_departments (usersid, foodtypeid) VALUES (:restaurantId, :foodtypeId)";
+//        try (Connection con = sql2o.open()) {
+//            con.createQuery(sql)
+//                    .addParameter("restaurantId", restaurant.getId())
+//                    .addParameter("foodtypeId", foodtype.getId())
+//                    .executeUpdate();
+//        } catch (Sql2oException ex){
+//            System.out.println(ex);
+//        }

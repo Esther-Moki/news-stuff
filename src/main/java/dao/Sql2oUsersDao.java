@@ -1,9 +1,12 @@
 package dao;
 
+import models.Departments;
 import models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oUsersDao implements UsersDao{
@@ -17,8 +20,8 @@ public class Sql2oUsersDao implements UsersDao{
     @Override
     public void add(Users users) {
         String sql="INSERT INTO users(username,position,role) VALUES (:username,:position,:role)";
-        try (Connection conn =sql2o.open()){
-            int id=(int)conn.createQuery(sql,true)
+        try (Connection con =sql2o.open()){
+            int id=(int)con.createQuery(sql,true)
                     .bind(users)
                     .executeUpdate()
                     .getKey();
@@ -28,22 +31,37 @@ public class Sql2oUsersDao implements UsersDao{
         }
     }
 
+    //many to many relationship between users and departments
+    @Override
+    public void addUsersToDepartments(Users users, Departments departments) {
+            String sql = "INSERT INTO departments_users (departmentsid, usersid) VALUES (:departmentsId, :usersId)";
+            try (Connection con = sql2o.open()) {
+                con.createQuery(sql)
+                        .addParameter("departmentsId", departments.getId())
+                        .addParameter("usersId", users.getId())
+                        .executeUpdate();
+            } catch (Sql2oException ex){
+                System.out.println(ex);
+            }
+    }
+
     //get all users
     @Override
     public List<Users> getAll() {
-        Connection conn=sql2o.open();
-        return conn.createQuery("SELECT * FROM users")
+        Connection con=sql2o.open();
+        return con.createQuery("SELECT * FROM users")
                 .executeAndFetch(Users.class);
     }
 
-    @Override
-    public List<Users> getAllUsersForADepartments(int departmentId) {
-        try (Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM users WHERE departmentId = :departmentId")
-                    .addParameter("departmentId", departmentId)
-                    .executeAndFetch(Users.class);
-        }
-    }
+
+//    @Override
+//    public List<Users> getAllUsersForADepartments(int departmentsId) {
+//        try (Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM users WHERE departmentsId = :departmentsId")
+//                    .addParameter("departmentsId", departmentsId)
+//                    .executeAndFetch(Users.class);
+//        }
+//    }
 
     @Override
     public void deleteById(int id) {
