@@ -18,27 +18,35 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4567/`. The app w
 
 
 ## Setup/Installation Requirement
-Install gradle.
-In the command prompt, navigate to cloned folder and use the following command to run the app $ gradle run
-Open the browser and enter the address localhost:4567
+
 * 1.Clone this repo to your documents folder.
-* 2.
-* 3.Open the project on IntelliJ.
-* 4.Lastly open the project on `http://localhost:4567/`.
+* 2.Install gradle.
+* 3.Open the project on IntelliJ and use the following command to run the app "$ gradle run".
+* 4.Lastly use postman to try to send and also to retieve data from the database.
+
+## DATABASE NAME
+*1. \c news_information;
+*2.\c news_information_test;
+
+## CREATE TABLES
+*1.Navigate to main/resources/db
+*2.Run psql < create.sql
+
+## DROP TABLES
+*1.Navigate to main/resources/db
+*2.Run psql < drop.sql
 
 ## Known Bugs
 
-There are no known bugs yet.
+There are no known bugs yet but at the time this project was made, UIs was not a major concern.
 
 ## Technologies Used
 
 Languages used include:
 * 1.Java
-* 2.Bootstrap
-* 3.Spark
-* 4.Gradle
-
-
+* 2.Spark
+* 3.Gradle
+* 
 ## Build
 
 Run `build` to build the project. The build artifacts will be stored in the `dist/` directory.
@@ -53,7 +61,7 @@ If you run into any issues or have questions, ideas,concerns or even want to mak
 
 ### License
 
-This document comes with <a href="https://github.com/Esther-Moki/tracking-wildlife/blob/master/LICENSE" target="_blank">MIT Licence</a> . Find the License document attached to it to learn more about it.
+This document comes with <a href="https://github.com/Esther-Moki/news-stuff/blob/master/LICENSE" target="_blank">MIT Licence</a> . Find the License document attached to it to learn more about it.
 * Copyright (c) [2021] [Esther Moki] 
 
 
