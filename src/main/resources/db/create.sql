@@ -1,42 +1,38 @@
 SET MODE PostgreSQL;
-
-CREATE DATABASE newsinformation;
-\c newsinformation
+--
+--CREATE DATABASE news_information;
+--\c news_information
 
 CREATE TABLE IF NOT EXISTS departments (
- id SERIAL PRIMARY KEY,
- name VARCHAR,
- description VARCHAR,
- employees VARCHAR
+      id int PRIMARY KEY auto_increment,
+      name VARCHAR,
+      description VARCHAR,
+      employees VARCHAR
 );
+
 CREATE TABLE IF NOT EXISTS news (
-  id SERIAL PRIMARY KEY,
-  content VARCHAR,
-  departmentsId INTEGER,
-  usersId INTEGER
+      id int PRIMARY KEY auto_increment,
+      content VARCHAR,
+      departmentsid INTEGER,
+      usersid INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR,
-  position VARCHAR,
-  role VARCHAR,
-  departmentsid INTEGER
+      id int PRIMARY KEY auto_increment,
+      username VARCHAR,
+      position VARCHAR,
+      role VARCHAR,
+      departmentsid INTEGER
 );
 CREATE TABLE IF NOT EXISTS departments_users (
-  id SERIAL PRIMARY KEY,,
- usersid INTEGER,
- departmetsid INTEGER
+      id int PRIMARY KEY auto_increment,
+      usersid INTEGER,
+      departmentsid INTEGER
 );
 CREATE TABLE IF NOT EXISTS departments_news (
-  id SERIAL PRIMARY KEY,,
- newsid INTEGER,
- departmetsid INTEGER
+      id int PRIMARY KEY auto_increment,
+      newsid INTEGER,
+      departmentsid INTEGER
 );
-
-CREATE DATABASE newsinformation_test WITH TEMPLATE newsinformation;
-
-
-
-
-
+--
+--CREATE DATABASE news_information_test WITH TEMPLATE news_information;

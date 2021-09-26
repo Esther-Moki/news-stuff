@@ -22,8 +22,8 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     @Override
     public void add(Departments departments) {
         String sql = "ADD INTO  departments (name,description, employees) VALUES (:name,:description,:employees,:phone)";
-        try (Connection con=sql2o.open();){
-            int id=(int)con.createQuery(sql,true)
+        try (Connection conn=sql2o.open();){
+            int id=(int)conn.createQuery(sql,true)
                     .bind( departments)
                     .executeUpdate()
                     .getKey();
@@ -36,8 +36,8 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     //many-to-many
     @Override
     public List<Departments> getAll() {
-        Connection con=sql2o.open();
-        return con.createQuery("SELECT * FROM departments")
+        Connection conn=sql2o.open();
+        return conn.createQuery("SELECT * FROM departments")
                 .executeAndFetch(Departments.class);
     }
 
@@ -45,9 +45,9 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     //finding any Departments by ID
     @Override
     public Departments findById(int id) {
-        try (Connection con=sql2o.open()){
+        try (Connection conn=sql2o.open()){
             String sql=("SELECT * FROM staff WHERE id=:id");
-            return con.createQuery(sql)
+            return conn.createQuery(sql)
                     .addParameter("id",id)
                     .executeAndFetchFirst(Departments.class);
         }
@@ -62,14 +62,14 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
 
         String joinQuery = "SELECT newsid FROM departments_news WHERE departmentsid = :departmentsId";
 
-        try (Connection con = sql2o.open()) {
-            List<Integer> allNewsIds = con.createQuery(joinQuery)
+        try (Connection conn = sql2o.open()) {
+            List<Integer> allNewsIds = conn.createQuery(joinQuery)
                     .addParameter("departmentsid", departmentsId)
                     .executeAndFetch(Integer.class);
             for (Integer newsId : allNewsIds){
                 String usersQuery = "SELECT * FROM news WHERE id = :newsId";
                 news.add(
-                        con.createQuery(usersQuery)
+                        conn.createQuery(usersQuery)
                                 .addParameter("newsId", newsId)
                                 .executeAndFetchFirst(News.class));
             }
@@ -87,14 +87,14 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
 
         String joinQuery = "SELECT usersid FROM departments_users WHERE departmentsid = :departmentsId";
 
-        try (Connection con = sql2o.open()) {
-            List<Integer> allUsersIds = con.createQuery(joinQuery)
+        try (Connection conn = sql2o.open()) {
+            List<Integer> allUsersIds = conn.createQuery(joinQuery)
                     .addParameter("departmentsid", departmentsId)
                     .executeAndFetch(Integer.class);
             for (Integer usersId : allUsersIds){
                 String usersQuery = "SELECT * FROM users WHERE id = :usersId";
                 users.add(
-                        con.createQuery(usersQuery)
+                        conn.createQuery(usersQuery)
                                 .addParameter("usersId", usersId)
                                 .executeAndFetchFirst(Users.class));
             }
@@ -116,11 +116,11 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     public void deleteById(int id) {
         String sql = "DELETE FROM departments WHERE id=:id";
         String deleteJoin = "DELETE from departmets_users WHERE departmentsid = :departmentsId";
-        try(Connection con=sql2o.open()) {
-            con.createQuery(sql,true)
+        try(Connection conn=sql2o.open()) {
+            conn.createQuery(sql,true)
                 .addParameter("id",id)
                 .executeUpdate();
-            con.createQuery(deleteJoin)
+            conn.createQuery(deleteJoin)
                     .addParameter("departmentsId", id)
                     .executeUpdate();
         }catch(Exception ex){
@@ -132,8 +132,8 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
     @Override
     public void clearAll() {
         String sql="DELETE * FROM departments";
-        try(Connection con=sql2o.open();){
-            con.createQuery(sql,true)
+        try(Connection conn=sql2o.open();){
+            conn.createQuery(sql,true)
                     .executeUpdate();
         }catch(Exception ex){
             ex.printStackTrace();

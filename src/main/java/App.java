@@ -1,7 +1,5 @@
 import models.Departments;
-import models.News;
-import models.Users;
-import org.sql2o.Sql2oException;
+
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
@@ -10,7 +8,7 @@ import dao.Sql2oNewsDao;
 import dao.Sql2oDepartmentsDao;
 import dao.Sql2oUsersDao;
 
-import models.Departments;
+
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -19,18 +17,21 @@ public class App {
         Sql2oDepartmentsDao departmentsDao;
         Sql2oUsersDao usersDao;
         Sql2oNewsDao newsDao;
-        Connection con;
+        Connection conn;
         Gson gson = new Gson();
 
-        String connectionString = "jdbc:h2:~/jadle.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "moringa", "1234");
+
+       String connectionString = "jdbc:h2:~/news_information.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        Sql2o sql2o = new Sql2o(connectionString, "", "");
 
 
         departmentsDao = new Sql2oDepartmentsDao(sql2o);
         usersDao = new Sql2oUsersDao(sql2o);
         newsDao = new Sql2oNewsDao(sql2o);
 
-        con = sql2o.open();
+
+
+        conn = sql2o.open();
         post("/departments/new", "application/json", (req, res) -> {
             Departments departments = gson.fromJson(req.body(), Departments.class);
             departmentsDao.add(departments);
@@ -38,9 +39,29 @@ public class App {
             res.type("application/json");
             return gson.toJson(departments);
         });
+        get("/departments", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            return gson.toJson(departmentsDao.getAll());//send it back to be displayed
+        });
 
-
+        get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            int departmentsid = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(departmentsDao.findById(departmentsid));
+        });
     }
 
 
+
+
 }
+
+
+
+
+//  usersDao = new Sql2oUsersDao(sql2o);
+//  newsDao = new Sql2oNewsDao(sql2o);
+
+
+
