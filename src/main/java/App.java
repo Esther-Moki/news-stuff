@@ -87,9 +87,9 @@ public class App {
         });
 
         //READ
-        get("/departments", "application/json", (req, res) -> { //accept a request in format JSON from an app
+        get("/news", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
-            return gson.toJson(departmentsDao.getAll());//send it back to be displayed
+            return gson.toJson(newsDao.getAll());//send it back to be displayed
         });
 
         get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
