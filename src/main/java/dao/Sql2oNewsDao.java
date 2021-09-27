@@ -1,6 +1,7 @@
 package dao;
 
 import models.News;
+import models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -36,6 +37,15 @@ public class Sql2oNewsDao implements NewsDao {
                 .executeAndFetch(News.class);
     }
 
+    @Override
+    public News findById(int id) {
+        try (Connection conn = sql2o.open()) {
+            String sql = ("SELECT * FROM news WHERE id=:id");
+            return conn.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(News.class);
+        }
+    }
 
     @Override
     public void deleteById(int id) {
