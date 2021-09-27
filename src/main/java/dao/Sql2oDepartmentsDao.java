@@ -143,13 +143,4 @@ public class Sql2oDepartmentsDao implements DepartmentsDao{
 
 
 
-//    public void addFoodtypeToRestaurant(Foodtype foodtype, Restaurant restaurant){
-//        String sql = "INSERT INTO users_departments (usersid, foodtypeid) VALUES (:restaurantId, :foodtypeId)";
-//        try (Connection con = sql2o.open()) {
-//            con.createQuery(sql)
-//                    .addParameter("restaurantId", restaurant.getId())
-//                    .addParameter("foodtypeId", foodtype.getId())
-//                    .executeUpdate();
-//        } catch (Sql2oException ex){
-//            System.out.println(ex);
-//        }
+//
