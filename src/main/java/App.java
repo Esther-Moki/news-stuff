@@ -62,7 +62,6 @@ public class App {
             return gson.toJson(users);
         });
 
-
         //READ
         get("/users", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
@@ -74,6 +73,29 @@ public class App {
             int usersid = Integer.parseInt(req.params("id"));
             res.type("application/json");
             return gson.toJson(usersDao.findById(usersid));
+        });
+
+        //departments
+        //CREATE
+        post("/departments/new", "application/json", (req, res) -> {
+            Departments departments = gson.fromJson(req.body(), Departments.class);
+            departmentsDao.add(departments);
+            res.status(201);
+            res.type("application/json");
+            return gson.toJson(departments);
+        });
+
+        //READ
+        get("/departments", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            return gson.toJson(departmentsDao.getAll());//send it back to be displayed
+        });
+
+        get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+            res.type("application/json");
+            int departmentsid = Integer.parseInt(req.params("id"));
+            res.type("application/json");
+            return gson.toJson(departmentsDao.findById(departmentsid));
         });
 
 

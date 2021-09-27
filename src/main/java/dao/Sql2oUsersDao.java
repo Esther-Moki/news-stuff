@@ -53,9 +53,6 @@ public class Sql2oUsersDao implements UsersDao {
                 .executeAndFetch(Users.class);
     }
 
-
-
-
     @Override
     public void deleteById(int id) {
 
