@@ -92,11 +92,11 @@ public class App {
             return gson.toJson(newsDao.getAll());//send it back to be displayed
         });
 
-        get("/departments/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
+        get("/news/:id", "application/json", (req, res) -> { //accept a request in format JSON from an app
             res.type("application/json");
-            int departmentsid = Integer.parseInt(req.params("id"));
+            int newsid = Integer.parseInt(req.params("id"));
             res.type("application/json");
-            return gson.toJson(departmentsDao.findById(departmentsid));
+            return gson.toJson(newsDao.findById(newsid));
         });
 
 
