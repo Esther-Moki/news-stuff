@@ -1,9 +1,7 @@
 SET MODE PostgreSQL;
---
 --CREATE DATABASE news_information;
 --\c news_information
-
-CREATE TABLE IF NOT EXISTS departments (
+ CREATE TABLE IF NOT EXISTS departments (
       id int PRIMARY KEY auto_increment,
       name VARCHAR,
       description VARCHAR,
