@@ -54,11 +54,7 @@ public class Sql2oUsersDao implements UsersDao {
     }
 
 
-//    @Override
-//    public List<Users> getAllUsersForADepartments(int departmentsId) {
-//        try (Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM users WHERE departmentsId = :departmentsId")
-//
+
 
     @Override
     public void deleteById(int id) {
