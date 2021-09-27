@@ -1,4 +1,4 @@
-# NEWS APP API
+# NEWS APP REST API
 This project happens to be a Java/Spark application with a REST API for querying and retrieving scoped news and information that includes news,articles,
 posts that are available to all employees and also one can request for news that belong to a specific department.
 
