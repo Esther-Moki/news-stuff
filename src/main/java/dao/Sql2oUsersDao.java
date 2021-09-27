@@ -9,7 +9,7 @@ import org.sql2o.Sql2oException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sql2oUsersDao implements UsersDao{
+public class Sql2oUsersDao implements UsersDao {
     private final Sql2o sql2o;
 
     public Sql2oUsersDao(Sql2o sql2o) {
@@ -19,14 +19,14 @@ public class Sql2oUsersDao implements UsersDao{
     //add users
     @Override
     public void add(Users users) {
-        String sql="INSERT INTO users(username,position,role) VALUES (:username,:position,:role)";
-        try (Connection conn =sql2o.open()){
-            int id=(int)conn.createQuery(sql,true)
+        String sql = "INSERT INTO users(username,position,role) VALUES (:username,:position,:role)";
+        try (Connection conn = sql2o.open()) {
+            int id = (int) conn.createQuery(sql, true)
                     .bind(users)
                     .executeUpdate()
                     .getKey();
             users.setId(id);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -34,21 +34,21 @@ public class Sql2oUsersDao implements UsersDao{
     //many to many relationship between users and departments
     @Override
     public void addUsersToDepartments(Users users, Departments departments) {
-            String sql = "INSERT INTO departments_users (departmentsid, usersid) VALUES (:departmentsId, :usersId)";
-            try (Connection conn = sql2o.open()) {
-                conn.createQuery(sql)
-                        .addParameter("departmentsId", departments.getId())
-                        .addParameter("usersId", users.getId())
-                        .executeUpdate();
-            } catch (Sql2oException ex){
-                System.out.println(ex);
-            }
+        String sql = "INSERT INTO departments_users (departmentsid, usersid) VALUES (:departmentsId, :usersId)";
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery(sql)
+                    .addParameter("departmentsId", departments.getId())
+                    .addParameter("usersId", users.getId())
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
     }
 
     //get all users
     @Override
     public List<Users> getAll() {
-        Connection conn=sql2o.open();
+        Connection conn = sql2o.open();
         return conn.createQuery("SELECT * FROM users")
                 .executeAndFetch(Users.class);
     }
@@ -72,4 +72,23 @@ public class Sql2oUsersDao implements UsersDao{
     public void clearAll() {
 
     }
+
+    @Override
+    public Users findById(int id) {
+        try (Connection conn = sql2o.open()) {
+            String sql = ("SELECT * FROM users WHERE id=:id");
+            return conn.createQuery(sql)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Users.class);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+

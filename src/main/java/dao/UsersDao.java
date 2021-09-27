@@ -12,10 +12,13 @@ public interface UsersDao {
 
     //read
     List<Users> getAll();
+    Users findById(int id);
 
     //delete
     void deleteById(int id);
     void clearAll();
+
+
 
 }
 
