@@ -11,9 +11,7 @@ public interface NewsDao {
     //read
     List<News> getAll();
 
-
     //delete
     void deleteById(int id);
     void clearAll();
-
 }
