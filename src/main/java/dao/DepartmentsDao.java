@@ -24,7 +24,6 @@ public interface DepartmentsDao {
     //delete
     void deleteById(int id);
     void clearAll();
-
 }
 
 
