@@ -1,4 +1,4 @@
-# WILDLIFE  TRACKING APP
+# NEWS APP API
 This project happens to be a Java/Spark application with a REST API for querying and retrieving scoped news and information that includes news,articles,
 posts that are available to all employees and also one can request for news that belong to a specific department.
 
@@ -11,11 +11,6 @@ A Java/Spark application with a REST API for querying and retrieving scoped news
 and posts.They are available to all users without navigating into any department, and others that are housed or
 classified within departments.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4567/`. The app will automatically reload if you change any of the source files.
-
-
 
 ## Setup/Installation Requirement
 
@@ -25,16 +20,17 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4567/`. The app w
 * 4.Lastly use postman to try to send and also to retieve data from the database.
 
 ## DATABASE NAME
-*1. \c news_information;
-*2.\c news_information_test;
+
+* 1.\c news_information;
+* 2.\c news_information_test;
 
 ## CREATE TABLES
-*1.Navigate to main/resources/db
-*2.Run psql < create.sql
+* 1.Navigate to main/resources/db
+* 2.Run psql < create.sql
 
 ## DROP TABLES
-*1.Navigate to main/resources/db
-*2.Run psql < drop.sql
+* 1.Navigate to main/resources/db
+* 2.Run psql < drop.sql
 
 ## Known Bugs
 
@@ -46,7 +42,7 @@ Languages used include:
 * 1.Java
 * 2.Spark
 * 3.Gradle
-* 
+
 ## Build
 
 Run `build` to build the project. The build artifacts will be stored in the `dist/` directory.
@@ -57,7 +53,7 @@ Run `ng test` to execute the unit tests via [gradle]
 
 ## Support and Contact details
 
-If you run into any issues or have questions, ideas,concerns or even want to make a contribution to the code,you can drop me an email on esthermoki@student.moringaschool.com.
+If you run into any issues or have questions, ideas,concerns or even want to make a contribution to the code,you can drop me an email on esther.moki@student.moringaschool.com.
 
 ### License
 
