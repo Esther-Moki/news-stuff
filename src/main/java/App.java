@@ -9,6 +9,7 @@ import dao.Sql2oDepartmentsDao;
 import dao.Sql2oUsersDao;
 
 
+import models.News;
 import models.Users;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -75,14 +76,14 @@ public class App {
             return gson.toJson(usersDao.findById(usersid));
         });
 
-        //departments
+        //news
         //CREATE
-        post("/departments/new", "application/json", (req, res) -> {
-            Departments departments = gson.fromJson(req.body(), Departments.class);
-            departmentsDao.add(departments);
+        post("/news/new", "application/json", (req, res) -> {
+            News news = gson.fromJson(req.body(), News.class);
+            newsDao.add(news);
             res.status(201);
             res.type("application/json");
-            return gson.toJson(departments);
+            return gson.toJson(news);
         });
 
         //READ
