@@ -58,10 +58,7 @@ public class Sql2oUsersDao implements UsersDao {
 //    public List<Users> getAllUsersForADepartments(int departmentsId) {
 //        try (Connection con = sql2o.open()) {
 //            return con.createQuery("SELECT * FROM users WHERE departmentsId = :departmentsId")
-//                    .addParameter("departmentsId", departmentsId)
-//                    .executeAndFetch(Users.class);
-//        }
-//    }
+//
 
     @Override
     public void deleteById(int id) {
